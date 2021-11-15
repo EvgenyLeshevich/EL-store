@@ -1,6 +1,9 @@
 package com.elstr.entities.product;
 
+import com.elstr.entities.order.OrdersProducts;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -13,7 +16,7 @@ public class Product {
     @Column(name = "name")
     private String name;
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
     @Column(name = "count")
     private Long count;
     @Column(name = "description")
@@ -36,4 +39,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ProductImages> productImages;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OrdersProducts> ordersProducts;
 }

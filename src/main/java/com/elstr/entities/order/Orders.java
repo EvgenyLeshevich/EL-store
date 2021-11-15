@@ -4,6 +4,7 @@ import com.elstr.entities.user.User;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -30,4 +31,7 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OrdersProducts> ordersProducts;
 }

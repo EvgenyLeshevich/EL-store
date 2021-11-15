@@ -16,9 +16,9 @@ public class City {
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Address> addresses;
 
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
+//    @ManyToOne
+//    @JoinColumn(name = "address_id")
+//    private Address address;
 
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
