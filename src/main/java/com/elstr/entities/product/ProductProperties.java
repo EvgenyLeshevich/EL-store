@@ -1,7 +1,5 @@
 package com.elstr.entities.product;
 
-import com.elstr.entities.product.Product;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 

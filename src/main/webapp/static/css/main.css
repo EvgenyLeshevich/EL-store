@@ -1,0 +1,73 @@
+body {
+    background: rgba(255,255,255,1);
+    background: -moz-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(232,241,255,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,1)), color-stop(100%, rgba(232,241,255,1)));
+    background: -webkit-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(232,241,255,1) 100%);
+    background: -o-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(232,241,255,1) 100%);
+    background: -ms-linear-gradient(left, rgba(255,255,255,1) 0%, rgba(232,241,255,1) 100%);
+    background: linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(232,241,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e8f1ff', GradientType=1 );
+}
+
+.col-xxl-8 {
+    width: auto;
+}
+
+.py-1 {
+    padding-top: 0 !important;
+}
+
+.py-5 {
+    padding-top: 2rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link:focus {
+    color: #ffffff;
+}
+
+.logo {
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+
+.carousel-caption {
+    border-radius: 20px;
+    background: rgba(78, 78, 78, 0.6);
+}
+
+.login {
+    padding: 60px 0;
+}
+
+.registration {
+    padding: 60px 0;
+}
+
+/*Responsive*/
+
+/*992px - 1200px*/
+@media screen and (max-width: 1200px){
+
+}
+
+/*768px - 992px*/
+@media screen and (max-width: 992px){
+
+}
+
+/*576px - 768px*/
+@media screen and (max-width: 768px){
+
+}
+
+/*320px - 576px*/
+@media screen and (max-width: 576px){
+    .row > * {
+        margin-top: 10px;
+    }
+    .carousel-caption {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}

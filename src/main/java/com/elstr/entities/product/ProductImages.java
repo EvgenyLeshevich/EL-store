@@ -1,9 +1,6 @@
 package com.elstr.entities.product;
 
-import com.elstr.entities.product.Product;
-
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "product_images")
