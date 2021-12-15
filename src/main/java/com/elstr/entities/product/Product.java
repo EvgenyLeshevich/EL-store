@@ -1,14 +1,25 @@
 package com.elstr.entities.product;
 
 import com.elstr.entities.order.OrdersProducts;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product")
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -17,6 +28,7 @@ public class Product {
     private String name;
     @Column(name = "price")
     private BigDecimal price;
+    @Min(value = 0, message = "Некоторых товаров больше нет в наличии. Содержимое корзины изменилось")
     @Column(name = "count")
     private Long count;
     @Column(name = "description")
@@ -42,4 +54,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrdersProducts> ordersProducts;
+
 }

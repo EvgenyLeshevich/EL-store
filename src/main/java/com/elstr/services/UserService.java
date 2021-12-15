@@ -1,0 +1,211 @@
+package com.elstr.services;
+
+import com.elstr.dto.UserDto;
+import com.elstr.entities.address.Address;
+import com.elstr.entities.address.City;
+import com.elstr.entities.address.Country;
+import com.elstr.entities.user.Role;
+import com.elstr.entities.user.User;
+import com.elstr.exceptions.UserAlreadyExistException;
+import com.elstr.exceptions.UserPasswordException;
+import com.elstr.repository.AddressRepository;
+import com.elstr.repository.CityRepository;
+import com.elstr.repository.CountryRepository;
+import com.elstr.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+public class UserService implements UserDetailsService {
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CountryRepository countryRepository;
+
+    @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @Autowired
+    private MainSenderService mainSender;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username);
+    }
+
+    /*public boolean addUser(Address address, User user, Country country, City city) {
+        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
+
+        if (userFromDb != null) {
+            return false;
+        }
+
+        City cityFromDB = cityRepository.findByCityName(city.getCityName());
+        address.setCity(cityFromDB);
+
+        Country countryFromDB = countryRepository.findByCountryName(country.getCountryName());
+        address.setCountry(countryFromDB);
+
+        addressRepository.save(address);
+
+        user.setAddress(address);
+        user.setActive(false);
+        user.setRoles(Collections.singleton(Role.USER)); // Если у нас всего одно значение, а параметр принимает Set то мы используем Collections.singleton() - который создаёт Set с одним значением
+        // задаём активационный код, генерируем его с помощью UUID.randomUUID().toString()
+        // как только пользователь перейдёт по ссылке почта будет подтверждена
+        user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        userRepository.save(user);
+
+        sendMessage(user);
+
+        return true;
+    }*/
+
+    public String addUser(Address address, User user, Country country, City city) {
+        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
+        String result = null;
+        try {
+            if (userFromDb.getUsername().equals(user.getUsername()) && userFromDb.getEmail().equals(user.getEmail())) {
+                return "errorUsernameAndEmail";
+            } else if (userFromDb.getEmail().equals(user.getEmail())) {
+                return "errorEmail";
+            } else if (userFromDb.getUsername().equals(user.getUsername())) {
+                return "errorUsername";
+            }
+        } catch (NullPointerException ex) {
+            City cityFromDB = cityRepository.findByCityName(city.getCityName());
+            address.setCity(cityFromDB);
+
+            Country countryFromDB = countryRepository.findByCountryName(country.getCountryName());
+            address.setCountry(countryFromDB);
+
+//            addressRepository.save(address); // Установил CascadeType.ALL на адрес
+
+            user.setAddress(address);
+            user.setActive(false);
+            user.setRoles(Collections.singleton(Role.USER)); // Если у нас всего одно значение, а параметр принимает Set то мы используем Collections.singleton() - который создаёт Set с одним значением
+            // задаём активационный код, генерируем его с помощью UUID.randomUUID().toString()
+            // как только пользователь перейдёт по ссылке почта будет подтверждена
+            user.setActivationCode(UUID.randomUUID().toString());
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            userRepository.save(user);
+
+            sendMessage(user);
+
+            result = "additionSuccessful";
+        }
+        return result;
+    }
+
+    private void sendMessage(User user) {
+        // отправка оповещения пользователю если у него есть почта
+        // !StringUtils.isEmpty(user.getEmail()) - проверяет что строчки не равны null и не пустые
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Welcome to EL-store. Please next link: http://localhost:8080/activate/%s",
+                    user.getUsername(),
+                    user.getActivationCode()
+            );
+
+            mainSender.send(user.getEmail(), "Activation code", message);
+        }
+    }
+
+    public boolean activateUser(String code) {
+        // Ищем пользователя по активационному коду в репозитории
+        User user = userRepository.findByActivationCode(code);
+
+        if (user == null) {
+            return false;
+        }
+
+        // Подтверждение что пользователь подтвердил почту
+        user.setActivationCode(null);
+        user.setActive(true);
+
+        userRepository.save(user);
+
+        return true;
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public void updateProfileGeneralInfo(User userSession, UserDto userDto) throws UserAlreadyExistException {
+        if (!userSession.getName().equals(userDto.getName())
+                || !userSession.getSurname().equals(userDto.getSurname())
+                || !userSession.getPhoneNumber().equals(userDto.getPhoneNumber())
+                || !userSession.getEmail().equals(userDto.getEmail())
+                || !userSession.getAddress().getCountry().getCountryName().equals(userDto.getCountryName())
+                || !userSession.getAddress().getCity().getCityName().equals(userDto.getCityName())
+                || !userSession.getAddress().getPostcode().equals(userDto.getPostcode())
+                || !userSession.getAddress().getApartmentAddress().equals(userDto.getApartmentAddress()))
+        {
+            userSession.setName(userDto.getName());
+            userSession.setSurname(userDto.getSurname());
+            userSession.setPhoneNumber(userDto.getPhoneNumber());
+            userSession.setEmail(userDto.getEmail());
+            userSession.getAddress().setCountry(countryRepository.findByCountryName(userDto.getCountryName()));
+            userSession.getAddress().setCity(cityRepository.findByCityName(userDto.getCityName()));
+            userSession.getAddress().setPostcode(userDto.getPostcode());
+            userSession.getAddress().setApartmentAddress(userDto.getApartmentAddress());
+
+            userRepository.save(userSession);
+        } else {
+            throw new UserAlreadyExistException("Пользователь уже существует!");
+        }
+    }
+
+    public void updateProfilePassword(User userSession, String oldPassword, String newPassword) throws UserPasswordException {
+
+        String userSessionPassword = userSession.getPassword();
+        if (!oldPassword.isEmpty() && passwordEncoder.matches(oldPassword, userSessionPassword) && !newPassword.isEmpty()) {
+            userSession.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(userSession);
+        } else if (newPassword.isEmpty() && !oldPassword .isEmpty()) {
+            throw new UserPasswordException("Данное поле не может быть пустым!");
+        } else if (!passwordEncoder.matches(oldPassword, userSessionPassword)) {
+            throw new UserPasswordException("Введенный пароль не совпадает с вашим!");
+        }
+    }
+
+    /*public String updateProfilePassword(User userSession, String oldPassword, String newPassword) {
+
+        String result = null;
+        String userSessionPassword = userSession.getPassword();
+        if (!oldPassword.isEmpty() && passwordEncoder.matches(oldPassword, userSessionPassword) && !newPassword.isEmpty()) {
+            userSession.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(userSession);
+            result = "updatePasswordSuccessful";
+        } else if (!passwordEncoder.matches(oldPassword, userSessionPassword)) {
+            result = "errorPasswordMismatch";
+        }
+        return result;
+    }*/
+}

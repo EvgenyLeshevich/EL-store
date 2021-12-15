@@ -1,5 +1,7 @@
 package com.elstr;
 
+import com.elstr.entities.product.Product;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
@@ -19,5 +21,9 @@ public class Test {
         System.out.println("Amount UA: " + formUs.format(result2));
         System.out.println("Amount RUS: " + formRu.format(result2));
         System.out.println("Amount BY: " + formBy.format(by));
+
+        Product product = new Product();
+        product.setName("ssas");
+        System.out.println(product.getName());
     }
 }

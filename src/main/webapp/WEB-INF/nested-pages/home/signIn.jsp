@@ -7,25 +7,7 @@
             <p class="col-lg-10 fs-4">Зарегистрируйтесь или войдите в свой аккаунт и получайте скидки на всю продукцию на сайте. Минута для регистрации и сэкономленные деньги! Удачных покупок!</p>
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
-            <form class="p-4 p-md-5 border rounded-3 bg-light">
-                <div class="form-floating mb-3">
-                    <input type="username" class="form-control" id="floatingInput" placeholder="Username">
-                    <label for="floatingInput">Username</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
-                </div>
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" value="remember-me"> Remember me
-                    </label>
-                </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                <hr class="my-4">
-                <small class="text-muted">Don't have an account yet? </small>
-                <a class="navbar-brand" href="/signup">Sign Up</a>
-            </form>
+            <jsp:include page="/WEB-INF/nested-pages/form/loginForm.jsp"/>
         </div>
     </div>
 </div>

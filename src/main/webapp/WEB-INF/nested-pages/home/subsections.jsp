@@ -7,14 +7,14 @@
                 <h2>Каталог</h2>
                 <p>Найдется все что так давно хотели: <br>Смартфоны, ноутбуки, аксессуары, планшеты, компьютеры, умные
                     часы, техника для дома и многое другое. <br>И все это в одном месте, осталось лишь выбрать!</p>
-                <button class="btn btn-outline-light" type="button">За покупками!</button>
+                <a type="button" class="btn btn-outline-light" href="/catalog">За покупками!</a>
             </div>
         </div>
         <div class="col-md-6">
             <div class="h-100 p-5 bg-light border rounded-3">
                 <h2>Обсуждения</h2>
                 <p>Сомнения в покупке? Не знаешь какой товар лучше? Не можешь определиться? Зайди и задай свой вопрос, почитай что думают другие и приобретай товары без сомнений! </p>
-                <button class="btn btn-outline-secondary" type="button">Узнать!</button>
+                <a type="button" class="btn btn-outline-secondary" href="#">Узнать!</a>
             </div>
         </div>
     </div>

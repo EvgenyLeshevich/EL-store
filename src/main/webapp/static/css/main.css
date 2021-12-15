@@ -36,6 +36,10 @@ body {
     background: rgba(78, 78, 78, 0.6);
 }
 
+.basket {
+    margin-right: 30px;
+}
+
 .login {
     padding: 60px 0;
 }
@@ -44,6 +48,89 @@ body {
     padding: 60px 0;
 }
 
+.row {
+    margin-bottom: 40px;
+}
+
+.sign-up {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background: rgba(0, 14, 152, 0.04);
+    border-radius: 2px;
+}
+
+.dropdown-toggle::after {
+    color: #fff;
+}
+
+.validation {
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: #dc3545;
+}
+
+.country {
+    font-weight: bold;
+}
+
+/*Account*/
+
+.nav-account{
+    padding: 20px 0;
+}
+
+.nav-link {
+    color: #000000;
+}
+
+.edit-info-profile {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    background: rgba(103, 98, 98, 0.09);
+    border-radius: 5px;
+}
+
+/*CatalogController*/
+.product-link {
+    text-decoration: none;
+}
+
+/*Products*/
+
+/*.sidebar {
+    position: fixed;
+}*/
+
+.nav-item {
+    padding-left: 20px;
+}
+
+.properties {
+    font-size: 1.25rem;
+    font-weight: 300;
+    padding: 10px 0;
+}
+
+.my-btn-link {
+    font-weight: 400;
+    color: #000000;
+    text-decoration: underline;
+    border-color: #000000;
+}
+
+/*Basket*/
+
+.my-basket {
+    padding: 40px 15px;
+}
+
+.my-count-product-in-basket {
+    width: 120px;
+    padding-top: 10px;
+}
+
+
 /*Responsive*/
 
 /*992px - 1200px*/
@@ -51,9 +138,23 @@ body {
 
 }
 
+@media (min-width: 992px) {
+    .my-product-card > * {
+        flex: 0 0 auto;
+        width: 25%;
+    }
+}
+
 /*768px - 992px*/
 @media screen and (max-width: 992px){
 
+}
+
+@media (min-width: 768px) {
+    .my-products-image {
+        flex: 0 0 auto;
+        width: 25%;
+    }
 }
 
 /*576px - 768px*/
@@ -70,4 +171,14 @@ body {
         padding-top: 0;
         padding-bottom: 0;
     }
+
+    /*Products*/
+    .d-md-block {
+        display: block !important;
+    }
+
+    .sidebar {
+        position: relative !important;
+    }
+
 }

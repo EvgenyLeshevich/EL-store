@@ -9,7 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="<c:url value="/static/css/bootstrap.min.css" />" rel="stylesheet">
     <script src="<c:url value="/static/js/bootstrap.bundle.min.js" />"></script>
+    <script src="<c:url value="/static/js/main.js" />"></script>
     <link href="<c:url value="/static/css/main.css" />" rel="stylesheet">
+    <link href="<c:url value="/static/css/error.css" />" rel="stylesheet"> <%--!!!!!!!!!!!!!--%>
+    <link href="<c:url value="/static/css/404.css" />" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 <header class="site-header sticky-top py-1">

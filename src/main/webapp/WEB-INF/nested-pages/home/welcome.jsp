@@ -41,16 +41,14 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-<%--            <img src="<c:url value="/static/img/pexels-karolina-grabowska-5632403.jpg" />"--%>
-<%--                 class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">--%>
         </div>
         <div class="col-lg-6">
             <h1 class="display-5 fw-bold lh-1 mb-3">EL-store - совершай покупки из любой точки страны</h1>
             <p class="lead">Привет USERNAME, хороших покупок!<br>Выберите товар..<br>Задай о нём вопрос в обсуждениях,
                 или прочти что думают другие..<br>Убедился, что товар тебе подходит? Покупай)</p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Каталог</button>
-                <button type="button" class="btn btn-outline-secondary btn-lg px-4">Обсуждения</button>
+                <a type="button" class="btn btn-primary btn-lg px-4 me-md-2" href="/catalog">Каталог</a>
+                <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="#">Обсуждения</a>
             </div>
         </div>
     </div>
