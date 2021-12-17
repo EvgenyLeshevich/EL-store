@@ -17,6 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, PagingA
     /*@Query("select p from Product p where p.brand.name like %?1%")
     List<Product> findByBrand_Name(String name);*/
 
+    Page<Product> findAllByProductProperties_PropertyValueIn(List<String> properties, Pageable pageable);
+
     Page<Product> findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(String name, Long maxCount, String brandName, Long max, Pageable pageable);
 
 }

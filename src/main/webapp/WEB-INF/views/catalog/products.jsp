@@ -21,49 +21,30 @@
                                 <div id="collapseOne" class="accordion-collapse collapse show"
                                      aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <ul class="nav flex-column">
-                                        В разработке
-                                        <%--<c:forEach items="${properties}" var="property">
+                                        <h4 style="color: red">В разработке</h4>
+
+                                        <form action="/catalog/mobile/0" method="get">
+                                        <c:forEach items="${properties}" var="property">
                                             <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                                                 <span>${property.propertyName}</span>
                                             </h6>
+
                                             <c:forEach items="${property.productProperties}" var="productProperties">
                                                 <li class="nav-item">
                                                     <div class="form-check">
-                                                        <form action="/catalog/mobile" method="post">
-                                                            <input class="form-check-input" type="submit"
+                                                            <input class="form-check-input" type="checkbox"
                                                                    name="propertyValue"
                                                                    value="${productProperties.propertyValue}">
-                                                        </form>
+
                                                         <label class="form-check-label">
                                                                 ${productProperties.propertyValue}
                                                         </label>
                                                     </div>
                                                 </li>
                                             </c:forEach>
-
-                                        </c:forEach>--%>
-
-                                            <%--<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                                                <span>Экран</span>
-                                            </h6>
-                                            <li class="nav-item">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                           id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        AMOLED
-                                                    </label>
-                                                </div>
-                                            </li>
-                                            <li class="nav-item">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value=""
-                                                           id="flexCheckDefault">
-                                                    <label class="form-check-label" for="flexCheckDefault">
-                                                        IPS
-                                                    </label>
-                                                </div>
-                                            </li>--%>
+                                        </c:forEach>
+                                            <input class="btn btn-warning" style="margin: 5px 15px" type="submit" value="Фильтровать">
+                                        </form>
                                     </ul>
                                 </div>
                             </div>
@@ -84,7 +65,7 @@
                         <h2 class="pb-2 border-bottom">Смартфоны:</h2>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Фильтры
+                                Сортировать
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li>
@@ -141,11 +122,6 @@
                                         </c:when>
                                     </c:choose>
 
-
-                                        <%--<p class="lead"> Apple iOS, экран 6.1" IPS (828x1792), Apple A13 Bionic, ОЗУ 4 ГБ,
-                                            флэш-память 64 ГБ, камера 12 Мп, аккумулятор 3046 мАч, 1 SIM</p>--%>
-
-                                        <%--                                    ЧТО У МЕНЯ БЫЛО!!!!!!!!!!!!!!!!!!!!!!!--%>
                                     <iframe name="myIFR" style="display: none"></iframe>
                                     <form target="myIFR" action="/catalog/to_basket" method="post">
                                             <%--                                    <button type="button" name="${product.id}" class="btn btn-success">В корзину</button>--%>
@@ -161,16 +137,6 @@
                                         </script>
                                     </c:forEach>
 
-
-                                        <%--<form id="basket" action="/catalog/to_basket" method="post">
-
-                                                &lt;%&ndash;                                    <button type="button" name="${product.id}" class="btn btn-success">В корзину</button>&ndash;%&gt;
-                                            <input type="hidden" id="productId" name="id" value="${product.id}"/>
-                                            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                                            <button class="btn btn-success active" id="btn" data-name="basket" type="button" onclick="inBasket(event)" value="В корзину"/>
-                                        </form>--%>
-
-
                                         <%--<button type="button" class="btn btn-dark">Полная информация</button>
                                         <button type="button" class="btn btn-outline-secondary">Обсудить</button>--%>
                                 </div>
@@ -179,33 +145,13 @@
                                         <img src="<c:url value="${image.image}" />"
                                              class="card-img-top" alt="${product.name}">
                                     </c:forEach>
-                                        <%--<img src="<c:url value="/static/img/products/mobile/apple/Iphone-11-black.jpg" />"
-                                             class="card-img-top" alt="...">--%>
                                 </div>
                             </div>
 
                             <hr class="featurette-divider">
 
                         </c:forEach>
-                            <%--<c:if test="${products.totalPages>0}">
-                            <nav aria-label="Page navigation example" >
-                                <ul class="pagination" >
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                            </c:if>--%>
+
                         <c:if test="${products.totalPages > 1 }">
                             <nav aria-label="Page navigation example">
                                 Showing ${products.number+1} of ${products.totalElements}

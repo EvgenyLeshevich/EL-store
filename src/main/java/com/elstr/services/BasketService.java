@@ -11,6 +11,7 @@ import com.elstr.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -86,7 +87,7 @@ public class BasketService {
             orderProduct.setStatus("The order has been placed");
             ordersProductsRepository.save(orderProduct);
         }
-//        sendMessage(user.getEmail(), ordersProductsList);
+        sendMessage(user.getEmail(), ordersProductsList);
     }
 
     public void deleteOrderWithProductCountZero(String dataCookie) {
@@ -101,19 +102,18 @@ public class BasketService {
         }
     }
 
-    /*private void sendMessage(String email, List<OrdersProducts> productName) {
-        // отправка оповещения пользователю если у него есть почта
-        // !StringUtils.isEmpty(user.getEmail()) - проверяет что строчки не равны null и не пустые
+    private void sendMessage(String email, List<OrdersProducts> productName) {
         if (!StringUtils.isEmpty(email)) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Your order:%s",
+                            "Your order: \n" +
+                            "%s",
                     email,
                     productName.toString()
             );
 
             mainSender.send(email, "Your order", message);
         }
-    }*/
+    }
 }
 

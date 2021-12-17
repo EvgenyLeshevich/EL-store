@@ -43,7 +43,8 @@ public class SmartphoneController {
                               @RequestParam(value = "dir", required = false, defaultValue = "asc") String sortDirection,
                               @RequestParam(value = "sort", required = false, defaultValue = "id") String sortBy,
                               @RequestParam(value = "name", required = false, defaultValue = "") Optional<String> name,
-                              @RequestParam(value = "maxCount", defaultValue = "0") Long count){
+                              @RequestParam(value = "maxCount", defaultValue = "0") Long count,
+                              @RequestParam(value = "propertyValue", required = false) List<String> propertiesFilter){
         if(activeUser!=null && !dataCookie.isEmpty()){
             model.addAttribute("listOrderProducts", ordersProductsRepository.findOrdersProductsByDataCookieAndStatusAndActiveUserId(dataCookie, "inBasket", activeUser.getId()));
         } else {
@@ -56,8 +57,16 @@ public class SmartphoneController {
         } else if(sortDirection.equalsIgnoreCase("desc")){
             sort = Sort.by(Sort.Direction.DESC, sortBy);
         }
-        Page<Product> productPage = productRepository.findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page,2,sort));
-        model.addAttribute("products", productPage);
+
+        try{
+            Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(propertiesFilter, PageRequest.of(0,2,sort));
+            model.addAttribute("products", products);
+        } catch (Exception exception){
+            Page<Product> productPage =
+                    productRepository.findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(
+                            name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page,2,sort));
+            model.addAttribute("products", productPage);
+        }
 
         List<Property> properties = propertyRepository.findAll();
         model.addAttribute("properties", properties);
@@ -74,13 +83,14 @@ public class SmartphoneController {
         return "redirect:/catalog/mobile";
     }
 
-    /*@PostMapping("/mobile")
+    /*@PostMapping("/mobile/0")
     public String filter(@RequestParam(value = "propertyValue", required = false) List<String> properties,
                          Model model){
 
-        List<Property> propertiesList = propertyRepository.findAll();
-        model.addAttribute("properties", propertiesList);
-        List<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(properties);
+//        List<Property> propertiesList = propertyRepository.findAll();
+//        model.addAttribute("properties", propertiesList);
+        properties.stream().distinct().close();
+        Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(properties, PageRequest.of(0,2));
         model.addAttribute("products", products);
 
         return "catalog/products";

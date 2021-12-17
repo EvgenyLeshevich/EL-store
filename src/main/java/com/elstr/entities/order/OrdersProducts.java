@@ -36,4 +36,11 @@ public class OrdersProducts {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @Override
+    public String toString() {
+        return
+                product.toString() + " Количество: " + count +
+                " Сумма =" + orderSum + "$ ";
+    }
 }

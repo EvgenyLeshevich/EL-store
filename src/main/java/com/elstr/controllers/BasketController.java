@@ -77,21 +77,6 @@ public class BasketController {
         if (bindingResult.hasErrors()) {
             return "basket/basket";
         }
-//        List<Product> productList = productRepository.findAllByCountLessThan(1L);
-//        if(productList.stream().allMatch(product -> product.getCount()<1)){
-//            productList.forEach(product -> ordersProductsRepository.deleteAllByProduct_Id(product.getId()));
-//            model.addAttribute("errorText", "Некоторых товаров больше нет в наличии. Содержимое корзины изменилось");
-//            return "error/errorProductInBasket";
-//        }
-//        for (Product product :
-//                productList) {
-//            if(product.getCount()<1){
-//                System.out.println("нафиг зашёл");
-//                ordersProductsRepository.deleteAllByProduct_Id(product.getId());
-//                model.addAttribute("errorText", "Некоторых товаров больше нет в наличии. Содержимое корзины изменилось");
-//                return "error/errorProductInBasket";
-//            }
-//        }
         try {
             basketService.saveOrder(user, dataCookie, activeUser, count, price);
         } catch (Exception ex) {

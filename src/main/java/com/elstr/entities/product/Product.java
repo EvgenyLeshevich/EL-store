@@ -55,4 +55,9 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrdersProducts> ordersProducts;
 
+    @Override
+    public String toString() {
+        return
+                name;
+    }
 }
