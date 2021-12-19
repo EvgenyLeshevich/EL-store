@@ -31,17 +31,6 @@ public class UsersController {
         return "admin/users";
     }
 
-    @GetMapping("/users/{id}")
-    public String userEdit(@PathVariable("id") Long id, Model model) {
-        if (userService.findById(id).isPresent()) {
-            model.addAttribute("user", userService.findById(id));
-            return "admin/userEdit";
-        } else {
-            model.addAttribute("error", "Пользователь с таким id не найден!");
-            return "errorPage";
-        }
-    }
-
     @GetMapping("/profile")
     public String profile(@AuthenticationPrincipal User user,
                           Model model) {
@@ -65,7 +54,7 @@ public class UsersController {
 
             return "user/userUpdateSuccessful";
         } catch (UserAlreadyExistException e) {
-            System.out.println(e.getMessage()); // Сделать логирование!!!
+            System.out.println(e.getMessage());
             return "redirect:/profile";
         } catch (Exception e) {
             return "redirect:/profile";
@@ -99,60 +88,4 @@ public class UsersController {
             return "redirect:/profile/security";
         }
     }
-
-    /*@PostMapping("/profile/security")
-    public String editProfilePassword(@AuthenticationPrincipal User userSession,
-                                      @RequestParam("oldPassword") String oldPassword,
-                                      @RequestParam("newPassword") String newPassword,
-                                      Model model) {
-
-        String result = null;
-        switch (userService.updateProfilePassword(userSession, oldPassword, newPassword)){
-            case "updatePasswordSuccessful":
-                result = "user/userUpdateSuccessful";
-                break;
-            case "errorPasswordMismatch":
-                model.addAttribute("errorPasswordMismatch", "Введенный пароль не совпадает с вашим!");
-                result = "user/profileSecurity";
-                break;
-            case "errorNullNewPassword":
-                model.addAttribute("nullNewPassword", "Данное поле не может быть пустым!");
-                result = "user/profileSecurity";
-                break;
-        }
-        return result;
-    }*/
-
-    /*@PostMapping("/profile")
-    public String editProfile(@AuthenticationPrincipal User userSession,
-                              @RequestParam("oldPassword") String oldPassword,
-                              @RequestParam("newPassword") String newPassword,
-                              @ModelAttribute("country") @Valid Country country,
-                              BindingResult countryErrors,
-                              @ModelAttribute("city") @Valid City city,
-                              BindingResult cityErrors,
-                              @ModelAttribute("address") @Valid Address address,
-                              BindingResult addressErrors,
-                              @ModelAttribute("user") @Valid User user,
-                              BindingResult userErrors,
-                              Model model) {
-
-
-
-
-        switch (userService.updateProfile(userSession, oldPassword, newPassword, country, city, address, user)) {
-            case "errorPasswordMismatch":
-                model.addAttribute("errorPasswordMismatch", "Введенный пароль не совпадает с вашим!");
-                return "user/profile";
-            case "nullNewPassword":
-                model.addAttribute("nullNewPassword", "Данное поле не может быть пустым!");
-                return "user/profile";
-            case "updateSuccessful":
-                model.addAttribute("updateSuccessful", "Обновление прошло успешно");
-                break;
-        }
-        return "user/userUpdateSuccessful";
-    }*/
-
-
 }

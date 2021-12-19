@@ -71,13 +71,6 @@ public class RegistrationController {
             model.addAttribute("captchaError", "Fill captcha");
             return "signUp";
         } else {
-           /* if (!userService.addUser(address, user, country, city)) {
-                model.addAttribute("message", "Пользователь с таким логином или почтой уже существует!");
-                return "signUp";
-            } else {
-                model.addAttribute("checkEmail", "Регистрация прошла успешно!");
-                return "signUp";
-            }*/
             switch (userService.addUser(address, user, country, city)){
                 case "errorUsername":
                     model.addAttribute("message", "Пользователь с таким логином уже существует!");

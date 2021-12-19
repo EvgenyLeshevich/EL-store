@@ -1,20 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <div class="container col-xxl-8 px-4 py-5">
     <div class="row align-items-md-stretch">
         <div class="col-md-6">
             <div class="h-100 p-5 text-white bg-dark rounded-3">
-                <h2>Каталог</h2>
-                <p>Найдется все что так давно хотели: <br>Смартфоны, ноутбуки, аксессуары, планшеты, компьютеры, умные
-                    часы, техника для дома и многое другое. <br>И все это в одном месте, осталось лишь выбрать!</p>
-                <a type="button" class="btn btn-outline-light" href="/catalog">За покупками!</a>
+                <h2><spring:message code="app.text.catalog"/></h2>
+                <p><spring:message code="app.home.text.catalogMess"/></p>
+                <a type="button" class="btn btn-outline-light" href="/catalog"><spring:message code="app.home.text.goShop"/></a>
             </div>
         </div>
         <div class="col-md-6">
             <div class="h-100 p-5 bg-light border rounded-3">
-                <h2>Обсуждения</h2>
-                <p>Сомнения в покупке? Не знаешь какой товар лучше? Не можешь определиться? Зайди и задай свой вопрос, почитай что думают другие и приобретай товары без сомнений! </p>
-                <a type="button" class="btn btn-outline-secondary" href="#">Узнать!</a>
+                <h2><spring:message code="app.text.discussions"/></h2>
+                <p><spring:message code="app.home.text.discusMess"/> </p>
+                <a type="button" class="btn btn-outline-secondary" href="/page-in-development"><spring:message code="app.home.text.goDiscuss"/></a>
             </div>
         </div>
     </div>

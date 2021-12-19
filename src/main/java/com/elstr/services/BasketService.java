@@ -49,8 +49,7 @@ public class BasketService {
     }
 
     @Transactional
-    public void saveOrder(UserDto user, String dataCookie, User activeUser, List<Long> count, List<BigDecimal> price) {
-//        User userToDB = UserMapper.INSTANCE.toEntity(user);
+    public void saveOrder(UserDto user, String dataCookie, User activeUser, List<Long> count, List<BigDecimal> price, String comment) {
         Orders orders = new Orders();
         orders.setUserName(user.getName());
         orders.setUserSurname(user.getSurname());
@@ -62,6 +61,7 @@ public class BasketService {
         orders.setApartmentAddress(user.getApartmentAddress());
         Date date = new Date();
         orders.setDataTime(date);
+        orders.setComment(comment);
 
         if(activeUser!=null){
             orders.setUser(activeUser);

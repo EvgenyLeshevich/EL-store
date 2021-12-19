@@ -3,8 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<t:wrapper title="Sign In">
+<t:wrapper title="Cart">
 
     <section id="my-basket" class="my-basket">
 
@@ -13,7 +14,7 @@
             <div class="row g-5">
                 <div class="col-md-5 col-lg-4 order-md-last">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-primary">Your cart</span>
+                        <span class="text-primary"><spring:message code="app.basket.text.cart"/></span>
                         <span class="badge bg-primary rounded-pill"></span>
                     </h4>
                     <form:form action="/order/product-save" method="post">
@@ -32,7 +33,7 @@
 
                                     </div>
 
-                                    <a href="/order/${product.id}">Удалить</a>
+                                    <a href="/order/${product.id}"><spring:message code="app.basket.text.delete"/></a>
 
                                 </div>
 
@@ -53,10 +54,10 @@
                                 </div>
                                 <span class="text-success">−$5</span>
                             </li>--%>
-                        <li class="list-group-item d-flex justify-content-between">
+                        <%--<li class="list-group-item d-flex justify-content-between">
                             <span>Total</span>
                             <strong id="orderSum"></strong>
-                        </li>
+                        </li>--%>
                     </ul>
                         <%--<form class="card p-2">
                             <div class="input-group">
@@ -67,44 +68,44 @@
                 </div>
 
                 <div class="col-md-7 col-lg-8">
-                    <h4 class="mb-3">Billing address</h4>
+                    <h4 class="mb-3"><spring:message code="app.basket.text.data"/></h4>
 
                     <form:form action="/order/product-save" modelAttribute="user" method="post">
                     <div class="row g-3 edit-info-profile">
 
                         <div class="col-sm-6">
-                            <form:label path="name" class="form-label">Имя </form:label>
+                            <form:label path="name" class="form-label"><spring:message code="app.text.name"/> </form:label>
                             <form:input type="text" path="name" id="name" class="form-control in"
                                         placeholder="${user.name}"/>
                             <form:errors path="name" cssClass="validation"/>
                         </div>
 
                         <div class="col-sm-6">
-                            <form:label path="surname" class="form-label">Фамилия </form:label>
+                            <form:label path="surname" class="form-label"><spring:message code="app.text.surname"/> </form:label>
                             <form:input type="text" path="surname" id="surname" class="form-control in"
                                         placeholder="${user.surname}"/>
                             <form:errors path="surname" cssClass="validation"/>
                         </div>
 
                         <div class="col-12">
-                            <form:label path="phoneNumber" class="form-label">Номер телефона </form:label>
+                            <form:label path="phoneNumber" class="form-label"><spring:message code="app.text.telephone"/> </form:label>
                             <form:input type="tel" path="phoneNumber" id="phoneNumber" class="form-control in"
                                         placeholder="${user.phoneNumber}"/>
                             <form:errors path="phoneNumber" cssClass="validation"/>
                         </div>
 
                         <div class="col-12">
-                            <form:label path="email" class="form-label">Электронная почта </form:label>
+                            <form:label path="email" class="form-label"><spring:message code="app.text.email"/> </form:label>
                             <form:input type="text" path="email" id="email" class="form-control in"
                                         placeholder="${user.email}"/>
                             <form:errors path="email" cssClass="validation"/>
                         </div>
 
                         <div class="col-md-5">
-                            <form:label path="countryName" class="form-label">Страна </form:label>
+                            <form:label path="countryName" class="form-label"><spring:message code="app.text.country"/> </form:label>
                             <form:select path="countryName" class="form-select"
                                          onchange="showCitiesByCountry(this.value)">
-                                <option selected disabled value="">Choose...</option>
+                                <option selected disabled value=""><spring:message code="app.text.choose"/></option>
                                 <form:options items="${countries}" itemValue="countryName" itemLabel="countryName"/>
                             </form:select>
                             <form:errors path="countryName" cssClass="validation"/>
@@ -117,9 +118,9 @@
                         </style>
 
                         <div class="col-md-4">
-                            <form:label path="cityName" class="form-label">Город </form:label>
+                            <form:label path="cityName" class="form-label"><spring:message code="app.text.city"/> </form:label>
                             <form:select id="cities" path="cityName" class="form-select">
-                                <option selected disabled value="dis">Choose...</option>
+                                <option selected disabled value="dis"><spring:message code="app.text.choose"/></option>
                                 <c:forEach items="${countries}" var="country">
                                     <form:options cssClass="${country.countryName}" items="${country.cities}"
                                                   itemValue="cityName" itemLabel="cityName"/>
@@ -129,14 +130,14 @@
                         </div>
 
                         <div class="col-md-3">
-                            <form:label path="postcode" class="form-label">Почтовый индекс </form:label>
+                            <form:label path="postcode" class="form-label"><spring:message code="app.text.postcode"/> </form:label>
                             <form:input type="text" path="postcode" id="postcode" class="form-control in"
                                         placeholder="${user.postcode}"/>
                             <form:errors path="postcode" cssClass="validation"/>
                         </div>
 
                         <div class="col-12">
-                            <form:label path="apartmentAddress" class="form-label">Адрес </form:label>
+                            <form:label path="apartmentAddress" class="form-label"><spring:message code="app.text.address"/> </form:label>
                             <form:input type="text" path="apartmentAddress" id="apartmentAddress"
                                         class="form-control in"
                                         placeholder="${user.apartmentAddress}"/>
@@ -144,12 +145,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <label for="exampleFormControlTextarea1" class="form-label"><spring:message code="app.basket.text.comment"/></label>
+                            <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3"></textarea>
                         </div>
 
                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-                        <input class="w-100 btn btn-primary btn-lg" type="submit" value="Заказать"/>
+                        <input class="w-100 btn btn-primary btn-lg" type="submit" value="<spring:message code="app.basket.text.order"/>"/>
 
                         </form:form>
                         </form:form>

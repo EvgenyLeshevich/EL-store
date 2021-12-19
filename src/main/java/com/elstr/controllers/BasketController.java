@@ -3,7 +3,6 @@ package com.elstr.controllers;
 import com.elstr.dto.UserDto;
 import com.elstr.entities.user.User;
 import com.elstr.repository.OrdersProductsRepository;
-import com.elstr.repository.ProductRepository;
 import com.elstr.services.BasketService;
 import com.elstr.services.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/order")
-/*@Validated*/
 public class BasketController {
 
     @Autowired
@@ -27,9 +25,6 @@ public class BasketController {
 
     @Autowired
     private OrdersProductsRepository ordersProductsRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
 
     @Autowired
     private CountryService countryService;
@@ -59,12 +54,11 @@ public class BasketController {
     @PostMapping("/product-save")
     public String productSave(@ModelAttribute("user") @Valid UserDto user,
                               BindingResult bindingResult,
-            /*@ModelAttribute("orders") Orders orders,*/
+                              @RequestParam(value = "comment", required = false) String comment,
                               @RequestParam(value = "count", required = false) List<Long> count,
                               @RequestParam(value = "price", required = false) List<BigDecimal> price,
                               @AuthenticationPrincipal User activeUser,
                               @CookieValue(value = "data", required = false) String dataCookie,
-            /*@RequestParam(value = "productCount", required = false) @NotEmpty(message = "Корзина пустая!") @NotNull (message = "not null") List<Long> productCount,*/
                               Model model) {
 
         model.addAttribute("countries", countryService.findAll());
@@ -78,7 +72,7 @@ public class BasketController {
             return "basket/basket";
         }
         try {
-            basketService.saveOrder(user, dataCookie, activeUser, count, price);
+            basketService.saveOrder(user, dataCookie, activeUser, count, price, comment);
         } catch (Exception ex) {
             basketService.deleteOrderWithProductCountZero(dataCookie);
             model.addAttribute("errorText", "Некоторых товаров больше нет в наличии. Содержимое корзины изменилось");
@@ -87,15 +81,6 @@ public class BasketController {
 
         return "basket/orderSuccessful";
     }
-
-    /*@ExceptionHandler(ConstraintViolationException.class)
-    public String handleConstraint(ConstraintViolationException ex,
-                                   Model model) {
-        if(ex.)
-        System.out.println(ex.getLocalizedMessage());
-        model.addAttribute("errorText" ,ex.getLocalizedMessage());
-        return "error/errorProductInBasket";
-    }*/
 
     @GetMapping("{id}")
     public String deleteProduct(@PathVariable Long id) {

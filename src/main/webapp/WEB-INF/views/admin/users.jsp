@@ -16,7 +16,6 @@
 <c:forEach items="${users}" var="user">
     ${user.username}
     <br>
-    <a href="/users/${user.id}"> Edit</a>
 
 </c:forEach>
 

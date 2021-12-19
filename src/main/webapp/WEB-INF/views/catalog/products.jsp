@@ -1,8 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<t:wrapper title="Sign In">
+<t:wrapper title="Mobile">
 
     <section>
         <div class="container">
@@ -15,7 +16,7 @@
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                             data-bs-target="#collapseOne" aria-expanded="true"
                                             aria-controls="collapseOne">
-                                        Фильтры
+                                        <spring:message code="app.products.text.filter"/>
                                     </button>
                                 </h2>
                                 <div id="collapseOne" class="accordion-collapse collapse show"
@@ -62,33 +63,33 @@
                         </div>
                     </div>
                     <div class="container px-4 py-5" id="custom-cards">
-                        <h2 class="pb-2 border-bottom">Смартфоны:</h2>
+                        <h2 class="pb-2 border-bottom"><spring:message code="app.catalog.text.smartphones"/>:</h2>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                Сортировать
+                                <spring:message code="app.products.text.sort"/>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                 <li>
                                     <c:choose>
                                         <c:when test="${param.keySet().contains('name')}">
-                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=asc&name=${pageContext.request.getParameter('name')}">Дешевые</a>
+                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=asc&name=${pageContext.request.getParameter('name')}"><spring:message code="app.products.text.cheap"/></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=asc">Дешевые</a>
+                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=asc"><spring:message code="app.products.text.cheap"/></a>
                                         </c:otherwise>
                                     </c:choose>
                                 </li>
                                 <li>
                                     <c:choose>
                                         <c:when test="${param.keySet().contains('name')}">
-                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=desc&name=${pageContext.request.getParameter('name')}">Дорогие</a>
+                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=desc&name=${pageContext.request.getParameter('name')}"><spring:message code="app.products.text.dear"/></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=desc">Дорогие</a>
+                                            <a class="dropdown-item" href="/catalog/mobile/${page}/?sort=price&dir=desc"><spring:message code="app.products.text.dear"/></a>
                                         </c:otherwise>
                                     </c:choose>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+
                             </ul>
                         </div>
 
@@ -98,7 +99,7 @@
 
                             <div class="row featurette">
                                 <div class="col-md-7 order-md-2">
-                                    <h2 class="featurette-heading">Смартфон ${product.brand.name} ${product.name} <span
+                                    <h2 class="featurette-heading"><spring:message code="app.products.text.smart"/> ${product.brand.name} ${product.name} <span
                                             class="text-muted">${product.description}</span>
                                     </h2>
                                     <h1>${product.price}$</h1>
@@ -112,24 +113,23 @@
 
                                     <c:choose>
                                         <c:when test="${product.count>=10}">
-                                            <h5>Наличие: <span class="badge bg-success">Ещё много!</span></h5>
+                                            <h5><spring:message code="app.products.text.avail"/>: <span class="badge bg-success"><spring:message code="app.products.text.many"/></span></h5>
                                         </c:when>
                                         <c:when test="${product.count==1}">
-                                            <h5>Наличие: <span class="badge bg-danger">Последний!</span></h5>
+                                            <h5><spring:message code="app.products.text.avail"/>: <span class="badge bg-danger"><spring:message code="app.products.text.last"/>!</span></h5>
                                         </c:when>
                                         <c:when test="${product.count<10}">
-                                            <h5>Наличие: <span class="badge bg-warning">Последние единицы!</span></h5>
+                                            <h5><spring:message code="app.products.text.avail"/>: <span class="badge bg-warning"><spring:message code="app.products.text.lastOne"/>!</span></h5>
                                         </c:when>
                                     </c:choose>
 
                                     <iframe name="myIFR" style="display: none"></iframe>
                                     <form target="myIFR" action="/catalog/to_basket" method="post">
-                                            <%--                                    <button type="button" name="${product.id}" class="btn btn-success">В корзину</button>--%>
                                         <input type="hidden" name="id" value="${product.id}"/>
                                         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
                                         <input class="btn btn-success" id="${product.id}" type="submit"
                                                onclick="inBasket(document.getElementById('${product.id}').id)"
-                                               value="В корзину"/>
+                                               value="<spring:message code="app.products.text.inBasket"/>"/>
                                     </form>
                                     <c:forEach items="${listOrderProducts}" var="orderProducts">
                                         <script>
@@ -142,7 +142,7 @@
                                 </div>
                                 <div class="col-md-5 order-md-1 my-products-image">
                                     <c:forEach items="${product.productImages}" var="image">
-                                        <img src="<c:url value="${image.image}" />"
+                                        <img style="height: 310px; width: auto;" src="<c:url value="${image.image}" />"
                                              class="card-img-top" alt="${product.name}">
                                     </c:forEach>
                                 </div>
@@ -154,12 +154,12 @@
 
                         <c:if test="${products.totalPages > 1 }">
                             <nav aria-label="Page navigation example">
-                                Showing ${products.number+1} of ${products.totalElements}
+                                <spring:message code="app.products.text.page"/> ${products.number+1} <spring:message code="app.products.text.pageOf"/> ${products.totalPages}
                                 <ul class="pagination">
                                     <li class="page-item">
                                         <a class="page-link" href="/catalog/mobile/${0}/?${requestScope['javax.servlet.forward.query_string']}"
                                            aria-label="Previous">
-                                            <span class="sr-only">Первая страница</span>
+                                            <span class="sr-only"><spring:message code="app.products.text.fistPage"/></span>
                                         </a>
                                     </li>
                                     <c:forEach begin="0" end="${products.totalPages-1}" var="page">
@@ -173,7 +173,7 @@
                                         <a class="page-link" href="/catalog/mobile/${page}/?${requestScope['javax.servlet.forward.query_string']}"
                                            aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Следующая</span>
+                                            <span class="sr-only"><spring:message code="app.products.text.next"/></span>
                                         </a>
                                     </li>
                                     </c:forEach>

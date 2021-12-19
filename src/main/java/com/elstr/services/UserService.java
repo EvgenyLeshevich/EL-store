@@ -8,7 +8,6 @@ import com.elstr.entities.user.Role;
 import com.elstr.entities.user.User;
 import com.elstr.exceptions.UserAlreadyExistException;
 import com.elstr.exceptions.UserPasswordException;
-import com.elstr.repository.AddressRepository;
 import com.elstr.repository.CityRepository;
 import com.elstr.repository.CountryRepository;
 import com.elstr.repository.UserRepository;
@@ -37,9 +36,6 @@ public class UserService implements UserDetailsService {
     private CityRepository cityRepository;
 
     @Autowired
-    private AddressRepository addressRepository;
-
-    @Autowired
     private MainSenderService mainSender;
 
     @Autowired
@@ -49,36 +45,6 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username);
     }
-
-    /*public boolean addUser(Address address, User user, Country country, City city) {
-        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
-
-        if (userFromDb != null) {
-            return false;
-        }
-
-        City cityFromDB = cityRepository.findByCityName(city.getCityName());
-        address.setCity(cityFromDB);
-
-        Country countryFromDB = countryRepository.findByCountryName(country.getCountryName());
-        address.setCountry(countryFromDB);
-
-        addressRepository.save(address);
-
-        user.setAddress(address);
-        user.setActive(false);
-        user.setRoles(Collections.singleton(Role.USER)); // Если у нас всего одно значение, а параметр принимает Set то мы используем Collections.singleton() - который создаёт Set с одним значением
-        // задаём активационный код, генерируем его с помощью UUID.randomUUID().toString()
-        // как только пользователь перейдёт по ссылке почта будет подтверждена
-        user.setActivationCode(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        userRepository.save(user);
-
-        sendMessage(user);
-
-        return true;
-    }*/
 
     public String addUser(Address address, User user, Country country, City city) {
         User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
@@ -98,13 +64,9 @@ public class UserService implements UserDetailsService {
             Country countryFromDB = countryRepository.findByCountryName(country.getCountryName());
             address.setCountry(countryFromDB);
 
-//            addressRepository.save(address); // Установил CascadeType.ALL на адрес
-
             user.setAddress(address);
             user.setActive(false);
-            user.setRoles(Collections.singleton(Role.USER)); // Если у нас всего одно значение, а параметр принимает Set то мы используем Collections.singleton() - который создаёт Set с одним значением
-            // задаём активационный код, генерируем его с помощью UUID.randomUUID().toString()
-            // как только пользователь перейдёт по ссылке почта будет подтверждена
+            user.setRoles(Collections.singleton(Role.USER));
             user.setActivationCode(UUID.randomUUID().toString());
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -118,8 +80,6 @@ public class UserService implements UserDetailsService {
     }
 
     private void sendMessage(User user) {
-        // отправка оповещения пользователю если у него есть почта
-        // !StringUtils.isEmpty(user.getEmail()) - проверяет что строчки не равны null и не пустые
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
@@ -133,14 +93,12 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean activateUser(String code) {
-        // Ищем пользователя по активационному коду в репозитории
         User user = userRepository.findByActivationCode(code);
 
         if (user == null) {
             return false;
         }
 
-        // Подтверждение что пользователь подтвердил почту
         user.setActivationCode(null);
         user.setActive(true);
 
@@ -194,18 +152,4 @@ public class UserService implements UserDetailsService {
             throw new UserPasswordException("Введенный пароль не совпадает с вашим!");
         }
     }
-
-    /*public String updateProfilePassword(User userSession, String oldPassword, String newPassword) {
-
-        String result = null;
-        String userSessionPassword = userSession.getPassword();
-        if (!oldPassword.isEmpty() && passwordEncoder.matches(oldPassword, userSessionPassword) && !newPassword.isEmpty()) {
-            userSession.setPassword(passwordEncoder.encode(newPassword));
-            userRepository.save(userSession);
-            result = "updatePasswordSuccessful";
-        } else if (!passwordEncoder.matches(oldPassword, userSessionPassword)) {
-            result = "errorPasswordMismatch";
-        }
-        return result;
-    }*/
 }

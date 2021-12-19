@@ -64,7 +64,7 @@ public class SmartphoneController {
         } catch (Exception exception){
             Page<Product> productPage =
                     productRepository.findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(
-                            name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page,2,sort));
+                            name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page,4,sort));
             model.addAttribute("products", productPage);
         }
 
@@ -83,16 +83,4 @@ public class SmartphoneController {
         return "redirect:/catalog/mobile";
     }
 
-    /*@PostMapping("/mobile/0")
-    public String filter(@RequestParam(value = "propertyValue", required = false) List<String> properties,
-                         Model model){
-
-//        List<Property> propertiesList = propertyRepository.findAll();
-//        model.addAttribute("properties", propertiesList);
-        properties.stream().distinct().close();
-        Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(properties, PageRequest.of(0,2));
-        model.addAttribute("products", products);
-
-        return "catalog/products";
-    }*/
 }
