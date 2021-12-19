@@ -33,6 +33,8 @@ public class Product implements Serializable {
     private Long count;
     @Column(name = "description")
     private String description;
+    @Column(name = "number_of_purchases")
+    private Long numberOfPurchases;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

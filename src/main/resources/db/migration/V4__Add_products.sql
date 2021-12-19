@@ -11,14 +11,14 @@ insert into category (name)
 values ('Smartphones and gadgets'),
        ('Laptops and computers');
 
-insert into product (category_id, product_type_id, brand_id, name, price, count, description)
-values (1, 1, 1, 'Iphone 11', 650 , 10, 'Black'),
-       (1, 1, 2, 'Galaxy A51', 250, 1, 'Purple'),
-       (1, 1, 1, 'Iphone 13', 1200, 5, 'Black'),
-       (1, 1, 2, 'Galaxy Note20 Ultra', 1000, 25, 'Black'),
-       (1, 1, 1, 'Iphone 12', 950, 1, 'Red'),
-       (1, 1, 1, 'Iphone 13 Pro', 1700, 4, 'Blue'),
-       (1, 1, 2, 'Galaxy Z Fold3 5G', 2100, 15, 'Black');
+insert into product (category_id, product_type_id, brand_id, name, price, count, description, number_of_purchases)
+values (1, 1, 1, 'Iphone 11', 650 , 10, 'Black', 0),
+       (1, 1, 2, 'Galaxy A51', 250, 1, 'Purple', 5),
+       (1, 1, 1, 'Iphone 13', 1200, 5, 'Black', 2),
+       (1, 1, 2, 'Galaxy Note20 Ultra', 1000, 25, 'Black', 0),
+       (1, 1, 1, 'Iphone 12', 950, 1, 'Red', 12),
+       (1, 1, 1, 'Iphone 13 Pro', 1700, 4, 'Blue', 1),
+       (1, 1, 2, 'Galaxy Z Fold3 5G', 2100, 15, 'Black', 0);
 
 insert into property (property_name)
 values ('operating_system'),

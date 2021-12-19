@@ -83,6 +83,7 @@ public class BasketService {
             BigDecimal sum = price.get(tempIndex).multiply(BigDecimal.valueOf(count.get(tempIndex)));
             orderProduct.setOrderSum(sum);
             orderProduct.getProduct().setCount(orderProduct.getProduct().getCount() - count.get(tempIndex));
+            orderProduct.getProduct().setNumberOfPurchases(orderProduct.getProduct().getNumberOfPurchases() + count.get(tempIndex));
             tempIndex++;
             orderProduct.setStatus("The order has been placed");
             ordersProductsRepository.save(orderProduct);

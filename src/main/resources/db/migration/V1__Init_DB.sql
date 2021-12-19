@@ -66,14 +66,15 @@ CREATE TABLE IF NOT EXISTS category
 -- product
 CREATE TABLE IF NOT EXISTS product
 (
-    id              BIGINT PRIMARY KEY AUTO_INCREMENT,
-    category_id     BIGINT         NOT NULL,
-    product_type_id BIGINT         NOT NULL,
-    brand_id        BIGINT         NOT NULL,
-    name            VARCHAR(255)   NOT NULL,
-    price           DECIMAL(20, 2) NOT NULL,
-    count           BIGINT         NOT NULL,
-    description     VARCHAR(2048),
+    id                  BIGINT PRIMARY KEY AUTO_INCREMENT,
+    category_id         BIGINT         NOT NULL,
+    product_type_id     BIGINT         NOT NULL,
+    brand_id            BIGINT         NOT NULL,
+    name                VARCHAR(255)   NOT NULL,
+    price               DECIMAL(20, 2) NOT NULL,
+    count               BIGINT         NOT NULL,
+    description         VARCHAR(2048),
+    number_of_purchases BIGINT,
     FOREIGN KEY (category_id) REFERENCES category (id),
     FOREIGN KEY (product_type_id) REFERENCES product_type (id),
     FOREIGN KEY (brand_id) REFERENCES brand (id)

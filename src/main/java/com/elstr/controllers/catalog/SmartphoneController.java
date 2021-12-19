@@ -59,7 +59,7 @@ public class SmartphoneController {
         }
 
         try{
-            Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(propertiesFilter, PageRequest.of(0,2,sort));
+            Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(propertiesFilter, PageRequest.of(page,2,sort));
             model.addAttribute("products", products);
         } catch (Exception exception){
             Page<Product> productPage =
