@@ -67,7 +67,7 @@ public class RegistrationController {
             model.addAttribute("passwordTwoError", "Passwords are different!");
             return "signUp";
         }
-        if (countryErrors.hasErrors() || cityErrors.hasErrors() || addressErrors.hasErrors() || userErrors.hasErrors() || !response.isSuccess()) {
+        if (countryErrors.hasErrors() || cityErrors.hasErrors() || addressErrors.hasErrors() || userErrors.hasErrors() /*|| !response.isSuccess()*/) {
             model.addAttribute("captchaError", "Fill captcha");
             return "signUp";
         } else {
