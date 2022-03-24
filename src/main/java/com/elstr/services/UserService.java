@@ -83,7 +83,7 @@ public class UserService implements UserDetailsService {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to EL-store. Please next link: http://localhost:8080/activate/%s",
+                            "Welcome to EL-store. Please next link: http://34.159.8.40/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
