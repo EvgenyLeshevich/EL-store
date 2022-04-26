@@ -15,7 +15,9 @@ Admin account:
 
 ## Avaliable endpoints
 
-[http://localhost:8080](http://localhost:8080) - home page
+[http://localhost:8080](http://localhost:8080) - home page.
+
+[http://localhost:8080/h2-console](http://localhost:8080/h2-console) - getting to H2 database (username - sa).
 
 ## Technological Stack
 * Spring boot stack with next starters:
