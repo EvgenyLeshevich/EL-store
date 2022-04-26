@@ -44,27 +44,27 @@ public class SmartphoneController {
                               @RequestParam(value = "sort", required = false, defaultValue = "id") String sortBy,
                               @RequestParam(value = "name", required = false, defaultValue = "") Optional<String> name,
                               @RequestParam(value = "maxCount", defaultValue = "0") Long count,
-                              @RequestParam(value = "propertyValue", required = false) List<String> propertiesFilter){
-        if(activeUser!=null && !dataCookie.isEmpty()){
+                              @RequestParam(value = "propertyValue", required = false) List<String> propertiesFilter) {
+        if (activeUser != null && !dataCookie.isEmpty()) {
             model.addAttribute("listOrderProducts", ordersProductsRepository.findOrdersProductsByDataCookieAndStatusAndActiveUserId(dataCookie, "inBasket", activeUser.getId()));
         } else {
             model.addAttribute("listOrderProducts", ordersProductsRepository.findOrdersProductsByDataCookieAndStatusAndActiveUserId(dataCookie, "inBasket", null));
         }
 
         Sort sort = null;
-        if(sortDirection.equalsIgnoreCase("asc")){
+        if (sortDirection.equalsIgnoreCase("asc")) {
             sort = Sort.by(Sort.Direction.ASC, sortBy);
-        } else if(sortDirection.equalsIgnoreCase("desc")){
+        } else if (sortDirection.equalsIgnoreCase("desc")) {
             sort = Sort.by(Sort.Direction.DESC, sortBy);
         }
 
-        try{
-            Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(propertiesFilter, PageRequest.of(page,2,sort));
+        try {
+            Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(propertiesFilter, PageRequest.of(page, 2, sort));
             model.addAttribute("products", products);
-        } catch (Exception exception){
+        } catch (Exception exception) {
             Page<Product> productPage =
                     productRepository.findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(
-                            name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page,4,sort));
+                            name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page, 4, sort));
             model.addAttribute("products", productPage);
         }
 
@@ -77,7 +77,7 @@ public class SmartphoneController {
     @PostMapping("/to_basket")
     public String toBasket(@RequestParam("id") Long productId,
                            @AuthenticationPrincipal User activeUser,
-                           @CookieValue(value = "data", required = false) String dataCookie){
+                           @CookieValue(value = "data", required = false) String dataCookie) {
 
         basketService.productToBasket(productId, activeUser, dataCookie);
         return "redirect:/catalog/mobile";

@@ -12,7 +12,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -72,19 +75,19 @@ public class UsersController {
                                       @RequestParam("newPassword") String newPassword,
                                       Model model) {
 
-        try{
+        try {
             userService.updateProfilePassword(userSession, oldPassword, newPassword);
             model.addAttribute("updateSuccessful", "Обновление прошло успешно");
             return "user/userUpdateSuccessful";
-        } catch (UserPasswordException e){
-            if (e.getMessage().equalsIgnoreCase("Введенный пароль не совпадает с вашим!")){
+        } catch (UserPasswordException e) {
+            if (e.getMessage().equalsIgnoreCase("Введенный пароль не совпадает с вашим!")) {
                 model.addAttribute("errorPasswordMismatch", e.getMessage());
             }
-            if (e.getMessage().equalsIgnoreCase("Данное поле не может быть пустым!")){
+            if (e.getMessage().equalsIgnoreCase("Данное поле не может быть пустым!")) {
                 model.addAttribute("nullNewPassword", e.getMessage());
             }
             return "user/profileSecurity";
-        } catch (Exception e){
+        } catch (Exception e) {
             return "redirect:/profile/security";
         }
     }

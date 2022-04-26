@@ -12,6 +12,7 @@ import com.elstr.repository.CityRepository;
 import com.elstr.repository.CountryRepository;
 import com.elstr.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,6 +27,10 @@ import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
+
+    @Value("${my.server.address}")
+    private String ulrAddress;
+
     @Autowired
     private UserRepository userRepository;
 
@@ -83,7 +88,7 @@ public class UserService implements UserDetailsService {
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
                     "Hello, %s! \n" +
-                            "Welcome to EL-store. Please next link: http://34.159.8.40/activate/%s",
+                            "Welcome to EL-store. Please next link: http://" + ulrAddress + "/activate/%s",
                     user.getUsername(),
                     user.getActivationCode()
             );
@@ -123,8 +128,7 @@ public class UserService implements UserDetailsService {
                 || !userSession.getAddress().getCountry().getCountryName().equals(userDto.getCountryName())
                 || !userSession.getAddress().getCity().getCityName().equals(userDto.getCityName())
                 || !userSession.getAddress().getPostcode().equals(userDto.getPostcode())
-                || !userSession.getAddress().getApartmentAddress().equals(userDto.getApartmentAddress()))
-        {
+                || !userSession.getAddress().getApartmentAddress().equals(userDto.getApartmentAddress())) {
             userSession.setName(userDto.getName());
             userSession.setSurname(userDto.getSurname());
             userSession.setPhoneNumber(userDto.getPhoneNumber());
@@ -146,7 +150,7 @@ public class UserService implements UserDetailsService {
         if (!oldPassword.isEmpty() && passwordEncoder.matches(oldPassword, userSessionPassword) && !newPassword.isEmpty()) {
             userSession.setPassword(passwordEncoder.encode(newPassword));
             userRepository.save(userSession);
-        } else if (newPassword.isEmpty() && !oldPassword .isEmpty()) {
+        } else if (newPassword.isEmpty() && !oldPassword.isEmpty()) {
             throw new UserPasswordException("Данное поле не может быть пустым!");
         } else if (!passwordEncoder.matches(oldPassword, userSessionPassword)) {
             throw new UserPasswordException("Введенный пароль не совпадает с вашим!");

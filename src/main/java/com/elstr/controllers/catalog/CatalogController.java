@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CatalogController {
 
     @GetMapping("/catalog")
-    public String showCatalog(){
+    public String showCatalog() {
         return "catalog/catalogPage";
     }
 }

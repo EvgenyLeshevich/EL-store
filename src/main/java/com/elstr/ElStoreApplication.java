@@ -8,13 +8,13 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @SpringBootApplication
 public class ElStoreApplication extends SpringBootServletInitializer {
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(ElStoreApplication.class);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ElStoreApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(ElStoreApplication.class, args);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(ElStoreApplication.class);
+    }
 
 }

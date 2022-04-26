@@ -22,7 +22,7 @@ public class MainController {
                        HttpServletResponse response,
                        @CookieValue(value = "data", required = false) String dataCookie,
                        Model model) {
-        if (dataCookie==null){
+        if (dataCookie == null) {
             Cookie cookie = new Cookie("data", httpSession.getId());
             cookie.setPath("/");
             cookie.setMaxAge(86400 * 365);

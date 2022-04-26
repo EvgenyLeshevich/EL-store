@@ -40,7 +40,7 @@ public class BasketService {
 
         order.setDataCookie(dataCookie);
 
-        if (activeUser!=null){
+        if (activeUser != null) {
             order.setActiveUserId(activeUser.getId());
         }
         ordersProductsRepository.save(order);
@@ -63,14 +63,14 @@ public class BasketService {
         orders.setDataTime(date);
         orders.setComment(comment);
 
-        if(activeUser!=null){
+        if (activeUser != null) {
             orders.setUser(activeUser);
         }
 
         ordersRepository.save(orders);
 
         List<OrdersProducts> ordersProductsList;
-        if(activeUser!=null){
+        if (activeUser != null) {
             ordersProductsList = ordersProductsRepository.findOrdersProductsByActiveUserIdAndStatus(activeUser.getId(), "inBasket");
         } else {
             ordersProductsList = ordersProductsRepository.findOrdersProductsByDataCookieAndStatusAndActiveUserId(dataCookie, "inBasket", null);

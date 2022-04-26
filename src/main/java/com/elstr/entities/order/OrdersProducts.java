@@ -41,6 +41,6 @@ public class OrdersProducts {
     public String toString() {
         return
                 product.toString() + " Количество: " + count +
-                " Сумма =" + orderSum + "$ ";
+                        " Сумма =" + orderSum + "$ ";
     }
 }

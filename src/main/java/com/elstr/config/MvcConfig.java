@@ -23,7 +23,7 @@ public class MvcConfig implements WebMvcConfigurer {
     private String uploadPath;
 
     @Bean
-    public RestTemplate getRestTemplate(){
+    public RestTemplate getRestTemplate() {
         return new RestTemplate();
     }
 
@@ -39,7 +39,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Bean("messageSource")
     public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource=new ReloadableResourceBundleMessageSource();
+        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:locale/messages");
         messageSource.setDefaultEncoding("UTF-8");
         messageSource.setDefaultLocale(Locale.getDefault());
