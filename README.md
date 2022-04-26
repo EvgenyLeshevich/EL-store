@@ -8,6 +8,13 @@ $ git clone https://github.com/EvgenyLeshevich/EL-store.git
 $ cd EL-store
 $ ./mvnw spring-boot:run
 
+//dockerize
+
+$ docker build -t el-store .
+$ docker run --name el-store -p 8080:8080 -d el-store
+
+  access http://localhost:8080
+
 Admin account:
   username - admin
   password - admin
