@@ -23,4 +23,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, PagingA
 
     Page<Product> findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(String name, Long maxCount, String brandName, Long max, Pageable pageable);
 
+    Page<Product> findAllBy(Pageable pageable);
 }

@@ -66,6 +66,9 @@
                             data-popper-placement="bottom-end">
                             <li><a class="dropdown-item" href="/profile"><spring:message code="app.text.profile"/></a></li>
                             <li><a class="dropdown-item" href="/profile/security"><spring:message code="app.text.securityProfile"/></a></li>
+                            <sec:authorize access="hasAuthority('ADMIN')">
+                            <li><a class="dropdown-item" href="/admin/products"><spring:message code="app.text.profile.admin.products"/></a></li>
+                            </sec:authorize>
                             <%--<li><a class="dropdown-item" href="/page-in-development">Мои заказы</a></li>
                             <li><a class="dropdown-item" href="/page-in-development">Обсуждения</a></li>--%>
                             <li>
