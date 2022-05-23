@@ -1,14 +1,22 @@
 package com.elstr.services;
 
 import com.elstr.entities.product.Product;
+import com.elstr.repository.FilterProductRepository;
 import com.elstr.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.*;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class ProductService {
@@ -26,7 +34,13 @@ public class ProductService {
         List<Long> collect = prod.stream()
                 .sorted(Comparator.reverseOrder())
                 .limit(3)
-                .collect(Collectors.toList());
+                .collect(toList());
         return productRepository.findAllByNumberOfPurchasesIn(collect);
     }
+
+    public Page<Product> filteringProducts(Map<String, String[]> collect, PageRequest pageRequest) {
+
+        return productRepository.filteringProducts(collect, pageRequest);
+    }
 }
+

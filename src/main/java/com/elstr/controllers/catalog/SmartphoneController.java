@@ -1,12 +1,14 @@
 package com.elstr.controllers.catalog;
 
+import com.elstr.dto.PropertiesValueDto;
 import com.elstr.entities.product.Product;
-import com.elstr.entities.product.Property;
 import com.elstr.entities.user.User;
 import com.elstr.repository.OrdersProductsRepository;
+import com.elstr.repository.ProductPropertiesRepository;
 import com.elstr.repository.ProductRepository;
 import com.elstr.repository.PropertyRepository;
 import com.elstr.services.BasketService;
+import com.elstr.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,8 +18,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/catalog")
@@ -33,7 +39,10 @@ public class SmartphoneController {
     private BasketService basketService;
 
     @Autowired
-    private PropertyRepository propertyRepository;
+    private ProductPropertiesRepository propertiesValueRepository;
+
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/mobile/{page}")
     public String showMobiles(Model model,
@@ -44,7 +53,11 @@ public class SmartphoneController {
                               @RequestParam(value = "sort", required = false, defaultValue = "id") String sortBy,
                               @RequestParam(value = "name", required = false, defaultValue = "") Optional<String> name,
                               @RequestParam(value = "maxCount", defaultValue = "0") Long count,
-                              @RequestParam(value = "propertyValue", required = false) List<String> propertiesFilter) {
+                              HttpServletRequest httpServletRequest) {
+        Map<String, String[]> collect = Collections
+                .list(httpServletRequest.getParameterNames())
+                .stream().collect(Collectors.toMap(parameterName -> parameterName, httpServletRequest::getParameterValues));
+
         if (activeUser != null && !dataCookie.isEmpty()) {
             model.addAttribute("listOrderProducts", ordersProductsRepository.findOrdersProductsByDataCookieAndStatusAndActiveUserId(dataCookie, "inBasket", activeUser.getId()));
         } else {
@@ -58,18 +71,21 @@ public class SmartphoneController {
             sort = Sort.by(Sort.Direction.DESC, sortBy);
         }
 
-        try {
-            Page<Product> products = productRepository.findAllByProductProperties_PropertyValueIn(propertiesFilter, PageRequest.of(page, 2, sort));
-            model.addAttribute("products", products);
-        } catch (Exception exception) {
+        if (collect.containsKey("sort") && collect.containsKey("dir") && collect.size() == 2) {
             Page<Product> productPage =
                     productRepository.findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(
                             name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page, 4, sort));
             model.addAttribute("products", productPage);
+        } else {
+            Page<Product> products = productService.filteringProducts(collect, PageRequest.of(page, 5, sort));
+            model.addAttribute("products", products);
+            if (products.getContent().size() == 0) {
+                model.addAttribute("productsNotFound", "productsNotFound");
+            }
         }
 
-        List<Property> properties = propertyRepository.findAll();
-        model.addAttribute("properties", properties);
+        List<PropertiesValueDto> propertiesValue = propertiesValueRepository.findAllPropertiesValue();
+        model.addAttribute("propValues", propertiesValue);
 
         return "catalog/products";
     }
