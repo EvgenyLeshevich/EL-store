@@ -47,7 +47,7 @@
             <h1 class="display-5 fw-bold lh-1 mb-3"><spring:message code="app.home.text.elStore"/></h1>
             <p class="lead"><spring:message code="app.home.text.hello"/><br><spring:message code="app.home.text.select"/><br><spring:message code="app.home.text.ask"/><br><spring:message code="app.home.text.bye"/></p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                <a type="button" class="btn btn-primary btn-lg px-4 me-md-2" href="/catalog"><spring:message code="app.text.catalog"/></a>
+                <a type="button" class="btn btn-primary btn-lg px-4 me-md-2" href=/catalog/mobile/0><spring:message code="app.text.catalog"/></a>
                 <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="/page-in-development"><spring:message code="app.text.discussions"/></a>
             </div>
         </div>

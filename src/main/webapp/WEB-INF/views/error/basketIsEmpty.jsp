@@ -11,7 +11,7 @@
             <span>0</span>
         </section>
         <div class="link-container">
-            <a href="/catalog" class="more-link"><spring:message code="app.basketInEmpty.goCatalog"/></a>
+            <a href="/catalog/mobile/0" class="more-link"><spring:message code="app.basketInEmpty.goCatalog"/></a>
         </div>
     </div>
 

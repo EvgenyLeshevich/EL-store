@@ -7,7 +7,7 @@
             <div class="h-100 p-5 text-white bg-dark rounded-3">
                 <h2><spring:message code="app.text.catalog"/></h2>
                 <p><spring:message code="app.home.text.catalogMess"/></p>
-                <a type="button" class="btn btn-outline-light" href="/catalog"><spring:message code="app.home.text.goShop"/></a>
+                <a type="button" class="btn btn-outline-light" href="/catalog/mobile/0"><spring:message code="app.home.text.goShop"/></a>
             </div>
         </div>
         <div class="col-md-6">

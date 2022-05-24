@@ -15,7 +15,7 @@
         <div class="navbar-collapse collapse" id="navbarsExample07" style="">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="/catalog"><spring:message code="app.text.catalog"/></a>
+                    <a class="nav-link" href="/catalog/mobile/0"><spring:message code="app.text.catalog"/></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/page-in-development"><spring:message code="app.text.discussions"/></a>
