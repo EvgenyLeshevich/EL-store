@@ -71,7 +71,7 @@ public class SmartphoneController {
             sort = Sort.by(Sort.Direction.DESC, sortBy);
         }
 
-        if (collect.containsKey("sort") && collect.containsKey("dir") && collect.size() == 2) {
+        if ((collect.containsKey("sort") && collect.containsKey("dir") && collect.size() == 2) || name.get().length() > 1) {
             Page<Product> productPage =
                     productRepository.findByNameStartingWithIgnoreCaseAndCountGreaterThanOrBrand_NameStartingWithIgnoreCaseAndCountGreaterThan(
                             name.orElse("_"), count, name.orElse("_"), count, PageRequest.of(page, 4, sort));
