@@ -1,4 +1,4 @@
-# EL-store
+# EL-store | https://el-store-evgeniy.herokuapp.com/
 
 This is an online store where you can view products, add them to your cart, and place an order. You can also register and view your personal profile.
 
